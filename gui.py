@@ -122,6 +122,10 @@ class Window(QWidget):
         self.timer.timeout.connect(self.update_mission_table_time)
         self.timer.start(1000)
 
+    def bring_to_front(self):
+        self.setWindowState(self.windowState() & ~Qt.WindowMinimized | Qt.WindowActive)
+        self.activateWindow()
+
     def init_image_labels(self):
         self.image_label = QLabel()
         img_path = os.path.relpath('temp/crop_27.bmp')

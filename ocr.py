@@ -130,8 +130,8 @@ class OCR:
 
         self.tesseract_log = open(os.path.relpath('logs/tesseract.log'), 'a+')
         if self.gui is None:
-            os.system('cls')
-            os.system('TITLE {}'.format(self.title))
+            self.clear_console()
+            self.set_title()
 
         if self.skip_screenshot is None:
             parser = OptionParser()
@@ -143,22 +143,36 @@ class OCR:
         self.api.put(PyTessBaseAPI())
         self.ex = ThreadPoolExecutor(max_workers=(len(self.crop_list)+3))
 
+    def set_title(self):
+        if win32gui is None:
+            sys.stdout.write("\x1b]2;test\x07")
+        else:
+            os.system('TITLE {}'.format(self.title))
+
     def window_enumeration_handler(self, hwnd, top_windows):
         top_windows.append((hwnd, win32gui.GetWindowText(hwnd)))
 
     def bring_to_front(self):
-        if self.move_to_top:
-            if self.gui is None and win32gui is not None:
-                top_windows = []
-                win32gui.EnumWindows(self.window_enumeration_handler, top_windows)
-                for i in top_windows:
-                    if self.title in i[1]:
-                        win32gui.ShowWindow(i[0], 5)
-                        win32gui.SetForegroundWindow(i[0])
-            else:
-                hwnd = win32gui.FindWindow(None, self.title)
-                win32gui.ShowWindow(hwnd, 5)
-                win32gui.SetForegroundWindow(hwnd)
+        if not self.move_to_top:
+            return
+        # running on linux
+        if win32gui is None:
+            self.gui.bring_to_front()
+            return
+        # running on windows console mode
+        if self.gui is None:
+            top_windows = []
+            win32gui.EnumWindows(self.window_enumeration_handler, top_windows)
+            for i in top_windows:
+                if self.title in i[1]:
+                    win32gui.ShowWindow(i[0], 5)
+                    win32gui.SetForegroundWindow(i[0])
+        # running on windows gui mode
+        else:
+            hwnd = win32gui.FindWindow(None, self.title)
+            win32gui.ShowWindow(hwnd, 5)
+            win32gui.SetForegroundWindow(hwnd)
+
 
     def dict_match(self, text):
         words = text.split(" ")
@@ -296,8 +310,14 @@ class OCR:
                             #self.gui.select_max()
                         else:
                             table.add_row(row)
-                            os.system('cls')
+                            self.clear_console()
                             print(table)
+
+    def clear_console(self):
+        if win32gui is not None:
+            os.system('clear')
+        else:
+            os.system('cls')
 
     def image_identical(self, img1, img2):
         try:

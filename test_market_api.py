@@ -1,4 +1,5 @@
 from market_api import MarketReader
+import os
 
 
 def test_answer():
