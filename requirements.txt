@@ -33,8 +33,5 @@ urllib3==1.25.7
 wcwidth==0.1.8
 zipp==0.6.0
 tesserocr==2.4.0 ; sys_platform != 'win32'
-https://github.com/NozomiIto/tesserocr_whl/blob/master/tesserocr-2.2.2-cp35-cp35m-win_amd64.whl?raw=true ; sys_platform == 'win32' and python_version == '3.5'
-https://github.com/simonflueckiger/tesserocr-windows_build/releases/download/tesserocr-v2.4.0-tesseract-4.0.0/tesserocr-2.4.0-cp37-cp37m-win32.whl ; sys_platform == 'win32' and python_version == '3.7'
-https://github.com/simonflueckiger/tesserocr-windows_build/releases/download/tesserocr-v2.4.0-tesseract-4.0.0/tesserocr-2.4.0-cp36-cp36m-win32.whl ; sys_platform == 'win32' and python_version == '3.6'
 pywin32==227 ; sys_platform == 'win32'
 pywin32-ctypes==0.2.0 ; sys_platform == 'win32'
