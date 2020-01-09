@@ -1,9 +1,11 @@
-*.txt
-*.csv
 *.log
 *.log_old
 *.txt_old
 screenshots/
+logs/*.txt
+logs/*.txt_old
+logs/*.log
+logs/*.log_old
 temp/
 .idea
 __pycache__
