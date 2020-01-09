@@ -3,13 +3,14 @@ language: python
 python:
   - "3.6"
   - "3.7"
+variables:
+    QT_QPA_PLATFORM: "offscreen"
 before_install:
   - sudo apt-get update
-  - sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config xvfb
+  - sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
 install:
   - pip install -r requirements.txt
 script:
-  - xvfb-run python test_gui.py
-  - xvfb-run pytest
+  - pytest -s
 notifications:
   email: false
