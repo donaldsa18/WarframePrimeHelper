@@ -156,7 +156,7 @@ class OCR:
         if not self.move_to_top:
             return
         # running on linux
-        if win32gui is None:
+        if win32gui is None and self.gui is not None:
             self.gui.bring_to_front()
             return
         # running on windows console mode
