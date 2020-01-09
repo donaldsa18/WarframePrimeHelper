@@ -1,5 +1,4 @@
 os: windows
-language: python
 before_install:
 - choco install python3
 - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
