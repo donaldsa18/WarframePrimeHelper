@@ -315,7 +315,7 @@ class OCR:
                             print(table)
 
     def clear_console(self):
-        if win32gui is not None:
+        if win32gui is None:
             os.system('clear')
         else:
             os.system('cls')
