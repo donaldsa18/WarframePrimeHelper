@@ -160,19 +160,20 @@ class OCR:
             self.gui.bring_to_front()
             return
         # running on windows console mode
-        if self.gui is None:
+        if win32gui is not None and self.gui is None:
             top_windows = []
             win32gui.EnumWindows(self.window_enumeration_handler, top_windows)
             for i in top_windows:
                 if self.title in i[1]:
                     win32gui.ShowWindow(i[0], 5)
                     win32gui.SetForegroundWindow(i[0])
+            return
         # running on windows gui mode
-        else:
+        if win32gui is not None and self.gui is not None:
             hwnd = win32gui.FindWindow(None, self.title)
             win32gui.ShowWindow(hwnd, 5)
             win32gui.SetForegroundWindow(hwnd)
-
+            return
 
     def dict_match(self, text):
         words = text.split(" ")
