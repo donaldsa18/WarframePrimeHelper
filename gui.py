@@ -14,14 +14,13 @@ from threading import Lock
 from datetime import datetime
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 import sys
+import os
 
 
 class Window(QWidget):
     def __init__(self):
         super(Window, self).__init__()
-        self.icon_path = 'resources\\warframe.ico'
-        if sys.platform != 'win32':
-            self.icon_path = self.icon_path.replace('\\', '/')
+        self.icon_path = os.path.relpath('resources/warframe.ico')
 
         self.app_title = 'Warframe Prime Helper'
         self.company_name = 'Warframe Tools'
@@ -125,9 +124,7 @@ class Window(QWidget):
 
     def init_image_labels(self):
         self.image_label = QLabel()
-        img_path = 'temp\\crop_27.bmp'
-        if sys.platform != 'win32':
-            img_path = img_path.replace('\\', '/')
+        img_path = os.path.relpath('temp/crop_27.bmp')
         image = QPixmap(img_path)
         self.image_label.setPixmap(image)
 

@@ -15,8 +15,8 @@ import re
 import difflib
 import sys
 
-if os.path.isdir('tesseract4win64-4.0-beta\\tessdata'):
-    os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta\\tessdata')
+if os.path.isdir('tesseract4win64-4.0-beta/tessdata'):
+    os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta/tessdata')
 
 from tesserocr import PyTessBaseAPI
 
@@ -33,7 +33,7 @@ except ImportError:
 class OCR:
     def __init__(self, debug=None, gui=None):
         self.window_name = "Warframe"
-        self.screenshot_name = os.path.relpath('resources\\screenshot.bmp')
+        self.screenshot_name = os.path.relpath('resources/screenshot.bmp')
 
         self.title = "Warframe Prime Helper"
 
@@ -60,9 +60,9 @@ class OCR:
 
         self.skip_screenshot = debug
 
-        self.price_csv = os.path.relpath('resources\\allprice.csv')
-        self.ducats_csv = os.path.relpath('resources\\ducats.csv')
-        self.primes_txt = os.path.relpath('resources\\primes.txt')
+        self.price_csv = os.path.relpath('resources/allprice.csv')
+        self.ducats_csv = os.path.relpath('resources/ducats.csv')
+        self.primes_txt = os.path.relpath('resources/primes.txt')
 
         # HSV bounds for getting rid of background
         self.lower = np.array([0, 0, 197])
@@ -81,8 +81,8 @@ class OCR:
         self.regex_alphabet = re.compile('[^a-zA-Z\s]')
 
         self.datetime_format = "%Y-%m-%d %I.%M.%S%p"
-        if os.path.isdir('tesseract4win64-4.0-beta\\tessdata'):
-            os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta\\tessdata')
+        if os.path.isdir('tesseract4win64-4.0-beta/tessdata'):
+            os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta/tessdata')
 
         self.gui = gui
         self.exit_now = False
@@ -126,9 +126,9 @@ class OCR:
         self.primes = [key for key, value in self.prices.items() if "Prime" in key and "Set" not in key]
         self.primes.append("Forma Blueprint")
 
-        self.log = open(os.path.relpath('logs\\log.txt'), 'a+')
+        self.log = open(os.path.relpath('logs/log.txt'), 'a+')
 
-        self.tesseract_log = open(os.path.relpath('logs\\tesseract.log'), 'a+')
+        self.tesseract_log = open(os.path.relpath('logs/tesseract.log'), 'a+')
         if self.gui is None:
             os.system('cls')
             os.system('TITLE {}'.format(self.title))

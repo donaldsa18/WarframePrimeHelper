@@ -1,5 +1,7 @@
 import requests
 from concurrent.futures import ThreadPoolExecutor
+import os
+
 
 class MarketReader:
     def __init__(self, gui=None, ocr=None):
@@ -14,9 +16,9 @@ class MarketReader:
         self.headers = {'Platform': self.platform, 'Region': self.region}
         self.primes = []
         self.threads = 4
-        self.price_csv = 'resources\\allprice.csv'
-        self.ducats_csv = 'resources\\ducats.csv'
-        self.primes_txt = 'resources\\primes.txt'
+        self.price_csv = os.path.relpath('resources/allprice.csv')
+        self.ducats_csv = os.path.relpath('resources/ducats.csv')
+        self.primes_txt = os.path.relpath('resources/primes.txt')
         self.prime_dict_list = None
 
     def get_prime_items(self):

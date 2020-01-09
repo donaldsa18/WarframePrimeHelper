@@ -7,15 +7,15 @@ import os
 class APIReader:
     def __init__(self, gui=None):
         self.fissures = None
-        with open(os.path.relpath('resources\\fissureModifiers.json')) as fissures_file:
+        with open(os.path.relpath('resources/fissureModifiers.json')) as fissures_file:
             self.fissures = json.load(fissures_file)
 
         self.sol_nodes = None
-        with open(os.path.relpath('resources\\solNodes.json')) as sol_nodes_file:
+        with open(os.path.relpath('resources/solNodes.json')) as sol_nodes_file:
             self.sol_nodes = json.load(sol_nodes_file)
 
         self.mission_types = None
-        with open(os.path.relpath('resources\\missionTypes.json')) as mission_types_file:
+        with open(os.path.relpath('resources/missionTypes.json')) as mission_types_file:
             self.mission_types = json.load(mission_types_file)
 
         self.api_str = "http://content.warframe.com/dynamic/worldState.php"
