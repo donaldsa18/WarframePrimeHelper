@@ -4,6 +4,7 @@ python:
   - "3.6"
   - "3.7"
 before_install:
+  - apt-get update
   - apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
 install:
   - pip install -r requirements.txt
