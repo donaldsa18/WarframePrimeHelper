@@ -1,15 +1,13 @@
 import cv2
 import numpy as np
-
 from time import time
 from datetime import datetime
-
-import win32gui
-import win32ui
-import win32con
+from concurrent.futures import ThreadPoolExecutor
+from optparse import OptionParser
+from PIL import Image
+import queue
 import time
 import os
-
 from prettytable import PrettyTable
 import csv
 import string
@@ -19,11 +17,16 @@ import difflib
 if os.path.isdir('tesseract4win64-4.0-beta\\tessdata'):
     os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta\\tessdata')
 
-from concurrent.futures import ThreadPoolExecutor
-from optparse import OptionParser
 from tesserocr import PyTessBaseAPI
-from PIL import Image
-import queue
+
+try:
+    import win32gui
+    import win32ui
+    import win32con
+except ImportError:
+    win32gui = None
+    win32ui = None
+    win32con = None
 
 
 class OCR:
@@ -196,7 +199,7 @@ class OCR:
         self.diff_threshold = val
 
     def screenshot(self):
-        if self.skip_screenshot:
+        if self.skip_screenshot or win32gui is None:
             return cv2.imread(self.screenshot_name)
         hwnd = None
         while not hwnd:

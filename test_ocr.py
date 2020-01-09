@@ -2,7 +2,7 @@ from ocr import OCR
 
 
 def test_answer():
-    ocr = OCR()
+    ocr = OCR(debug=True)
     ocr.init()
     old_read_primes = []
     old_filtered = 0
