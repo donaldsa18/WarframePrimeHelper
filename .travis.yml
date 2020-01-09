@@ -42,14 +42,14 @@ jobs:
         osx_image: xcode11.3
         language: shell
         before_install:
-          - sudo brew install leptonica
-          - sudo brew install tesseract
+          - brew install leptonica
+          - brew install tesseract
         env: PYTHON=3.7.4
       - name: "Python 3.7.0 on Windows"
         os: windows
         language: shell
         before_install:
-          - choco install python --version 3.7.0
+          - choco install python3 --version 3.7.4
           - python -m pip install --upgrade pip
         env: PATH=/c/Python37:/c/Python37/Scripts:$PATH TESSDATA_PREFIX=$TRAVIS_BUILD_DIR/tesseract4win64-4.0-beta/
 variables:
