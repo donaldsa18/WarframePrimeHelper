@@ -78,7 +78,7 @@ class OCR:
 
         self.printable = set(string.printable)
 
-        self.regex_alphabet = re.compile('[^a-zA-Z\s]')
+        self.regex_alphabet = re.compile(r'[^a-zA-Z\s]')
 
         self.datetime_format = "%Y-%m-%d %I.%M.%S%p"
         if os.path.isdir('tesseract4win64-4.0-beta/tessdata'):
@@ -148,7 +148,7 @@ class OCR:
 
     def bring_to_front(self):
         if self.move_to_top:
-            if self.gui is None:
+            if self.gui is None and win32gui is not None:
                 top_windows = []
                 win32gui.EnumWindows(self.window_enumeration_handler, top_windows)
                 for i in top_windows:
