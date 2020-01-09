@@ -2,7 +2,7 @@ import requests
 import json
 import time
 import sched
-
+import os
 
 class APIReader:
     def __init__(self, gui=None):
@@ -20,8 +20,7 @@ class APIReader:
             self.mission_types = json.load(mission_types_file)
 
         self.api_str = "http://content.warframe.com/dynamic/worldState.php"
-        if gui is not None:
-            self.gui = gui
+        self.gui = gui
         self.active_mission_details = set()
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.exit_now = False
@@ -65,7 +64,10 @@ class APIReader:
 
     def cancel_event(self):
         self.exit_now = True
-        self.scheduler.cancel(self.next_event)
+        try:
+            self.scheduler.cancel(self.next_event)
+        except ValueError:
+            pass
 
     def filter_expired_missions(self):
         cur_time = time.time()

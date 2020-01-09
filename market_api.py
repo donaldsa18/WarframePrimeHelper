@@ -25,9 +25,7 @@ class MarketReader:
             json_response = response.json()
             items = json_response['payload']['items']
             self.prime_items = [x for x in items if "Prime " in x['item_name'] and not x['item_name'].endswith("Set")]
-            if self.gui is None:
-                print("Found {} primes".format(len(self.prime_items)))
-            else:
+            if self.gui is not None:
                 self.gui.update_primes_info(len(self.prime_items), self.prime_items[-1]['item_name'])
             self.update_prime_dict()
 

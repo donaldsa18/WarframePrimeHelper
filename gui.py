@@ -45,6 +45,8 @@ class Window(QWidget):
         self.slider_values = None
         self.is_slider_max_set = False
 
+        self.settings_button = None
+
         #self.plat_check_box = QCheckBox("Prefer platinum")
         #self.plat_check_box.setChecked(True)
 
@@ -141,7 +143,7 @@ class Window(QWidget):
         self.setLayout(self.layout)
 
     def make_settings_button_box(self):
-        settings_button = QPushButton()
+        self.settings_button = QPushButton()
         # Gear icon is from: https://iconscout.com/icon/gear-222
         style_sheet = """
         QPushButton {
@@ -154,15 +156,15 @@ class Window(QWidget):
         QPushButton:hover {
             border-image: url("resources/SelectedGear.svg");
         }"""
-        settings_button.setStyleSheet(style_sheet)
+        self.settings_button.setStyleSheet(style_sheet)
         #settings_button.setStyleSheet("background-color: rgba(0, 0, 0, 255); font-size: 23px;")
-        settings_button.clicked.connect(self.show_preferences)
-        settings_button.setFixedWidth(30)
-        settings_button.setFixedHeight(30)
+        self.settings_button.clicked.connect(self.show_preferences)
+        self.settings_button.setFixedWidth(30)
+        self.settings_button.setFixedHeight(30)
 
         settings_button_hb = QHBoxLayout()
         settings_button_hb.setAlignment(Qt.AlignRight)
-        settings_button_hb.addWidget(settings_button)
+        settings_button_hb.addWidget(self.settings_button)
         settings_button_hb.addSpacing(-11)
         return settings_button_hb
 
@@ -842,29 +844,41 @@ class App():
     def __init__(self):
         self.ocr_thread = None
         self.market_api = None
+        self.api_thread = None
+        self.window = None
+
+    def init_threads(self):
+        self.ocr_thread = OCRThread(self.window)
+        self.window.set_ocr_connection(self.ocr_thread.ocr)
+        self.ocr_thread.start()
+
+        api = APIReader(gui=self.window)
+        self.api_thread = APIThread(self.window)
+        self.window.set_api(api)
+        self.api_thread.start()
+        self.market_api = self.window.market_api
+
+    def close_threads(self):
+        self.ocr_thread.ocr.exit_now = True
+        self.market_api.exit_now = True
+        self.ocr_thread.terminate()
+        self.api_thread.terminate()
+
+    def create_window(self):
+        self.window = Window()
 
     def run(self):
         app = ApplicationContext()
-        window = Window()
-        app.app.setWindowIcon(QIcon(window.icon_path))
+        self.create_window()
+
+        app.app.setWindowIcon(QIcon(self.window.icon_path))
         dark_stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         app.app.setStyleSheet(dark_stylesheet)
 
-        ocr_thread = OCRThread(window)
-        window.set_ocr_connection(ocr_thread.ocr)
-        ocr_thread.start()
-
-        api = APIReader(gui=window)
-        api_thread = APIThread(window)
-        window.set_api(api)
-        api_thread.start()
-
-        market_api = window.market_api
+        self.init_threads()
         exit_code = app.app.exec_()
-        ocr_thread.ocr.exit_now = True
-        market_api.exit_now = True
-        ocr_thread.terminate()
-        api_thread.terminate()
+        self.close_threads()
+
         return exit_code
 
 

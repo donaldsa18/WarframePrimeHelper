@@ -92,6 +92,9 @@ class OCR:
         if not os.path.exists("logs"):
             os.makedirs("logs")
 
+        if not os.path.exists("resources"):
+            os.makedirs("resources")
+
     def safe_cast(self, val, to_type, default=None):
         try:
             return to_type(val)
