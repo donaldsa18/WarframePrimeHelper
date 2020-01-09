@@ -7,7 +7,9 @@ variables:
     QT_QPA_PLATFORM: "offscreen"
 before_install:
   - sudo apt-get update
-  - sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config
+  - sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config libdbus-1-3 libxkbcommon-x11-0
+services:
+  - xvfb
 install:
   - pip install -r requirements.txt
 script:
