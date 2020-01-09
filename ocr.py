@@ -13,6 +13,7 @@ import csv
 import string
 import re
 import difflib
+import sys
 
 if os.path.isdir('tesseract4win64-4.0-beta\\tessdata'):
     os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta\\tessdata')
@@ -32,7 +33,7 @@ except ImportError:
 class OCR:
     def __init__(self, debug=None, gui=None):
         self.window_name = "Warframe"
-        self.screenshot_name = 'resources\\screenshot.bmp'
+        self.screenshot_name = os.path.relpath('resources\\screenshot.bmp')
 
         self.title = "Warframe Prime Helper"
 
@@ -59,9 +60,9 @@ class OCR:
 
         self.skip_screenshot = debug
 
-        self.price_csv = 'resources\\allprice.csv'
-        self.ducats_csv = 'resources\\ducats.csv'
-        self.primes_txt = 'resources\\primes.txt'
+        self.price_csv = os.path.relpath('resources\\allprice.csv')
+        self.ducats_csv = os.path.relpath('resources\\ducats.csv')
+        self.primes_txt = os.path.relpath('resources\\primes.txt')
 
         # HSV bounds for getting rid of background
         self.lower = np.array([0, 0, 197])
@@ -127,7 +128,7 @@ class OCR:
 
         self.log = open('logs\\log.txt', 'a+')
 
-        self.tesseract_log = open('logs\\tesseract.log', 'a+')
+        self.tesseract_log = open(os.path.relpath('logs\\tesseract.log'), 'a+')
         if self.gui is None:
             os.system('cls')
             os.system('TITLE {}'.format(self.title))
@@ -139,7 +140,7 @@ class OCR:
             (options, args) = parser.parse_args()
             self.skip_screenshot = options.debug
         #for i in range(len(self.crop_list)):
-        #    self.api.put(PyTessBaseAPI())
+        self.api.put(PyTessBaseAPI())
         self.ex = ThreadPoolExecutor(max_workers=(len(self.crop_list)+3))
 
     def window_enumeration_handler(self, hwnd, top_windows):
@@ -348,7 +349,7 @@ class OCR:
         if read_primes != old_read_primes:
             if len(read_primes) != 0:
                 if not self.skip_screenshot:
-                    cv2.imwrite('screenshots/{}.bmp'.format(cur_time), screenshot_img)
+                    cv2.imwrite(os.path.relpath('screenshots/{}.bmp').format(cur_time), screenshot_img)
                 end = datetime.now()
                 duration = (end - start).total_seconds()
                 self.log.write("{}: OCR='{}' Primes={} duration={}s\n".format(cur_time, text, read_primes, duration))
