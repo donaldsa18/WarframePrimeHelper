@@ -88,6 +88,9 @@ class OCR:
 
         self.api = queue.Queue()
         self.ex = None
+        
+        if not os.path.exists("logs"):
+            os.makedirs("logs")
 
     def safe_cast(self, val, to_type, default=None):
         try:

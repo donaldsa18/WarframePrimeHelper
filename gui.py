@@ -72,6 +72,7 @@ class Window(QWidget):
         self.hide_missions = {}
         self.hidden_missions = set()
         self.hide_missions_box = None
+        self.mission_names = None
 
         self.crop_img = None
         self.filter_img = None
@@ -225,6 +226,7 @@ class Window(QWidget):
         return button_box
 
     def load_settings(self):
+        self.settings.sync()
         slider_orig_values = {'x': 521, 'y': 400, 'w': 908, 'h': 70, 'v1': 197, 'v2': 180, 'd': 4,
                               'Screencap (hz)': 1, 'Fissure (s)': 30, 'API Threads': 4}
         self.slider_default_values = {}
@@ -259,6 +261,12 @@ class Window(QWidget):
             if checked:
                 self.set_hidden_relic(relic)
 
+        for mission in self.mission_names:
+            checked = self.settings.value("hide_{}".format(mission), defaultValue=False, type=bool)
+            self.hide_missions[mission].setChecked(checked)
+            if checked:
+                self.set_hidden_mission(mission)
+
         if self.settings.value("toggle_fissure_table", defaultValue=False, type=bool):
             self.hide_fissure_check_box.setChecked(True)
             self.toggle_fissure_table()
@@ -283,11 +291,15 @@ class Window(QWidget):
         for relic in self.relics:
             self.settings.setValue("hide_{}".format(relic), self.hide_relics[relic].isChecked())
 
+        for mission in self.mission_names:
+            self.settings.setValue("hide_{}".format(mission), self.hide_missions[mission].isChecked())
+
         self.settings.setValue("toggle_fissure_table", self.hide_fissure_check_box.isChecked())
         self.settings.setValue("toggle_move_to_top", self.move_to_top_check_box.isChecked())
         self.settings.setValue("toggle_cropped_img", self.hide_crop_check_box.isChecked())
         self.settings.setValue("toggle_filtered_img", self.hide_filter_check_box.isChecked())
         self.dialog.close()
+        self.settings.sync()
 
     def init_imgs(self):
         self.crop_img = QGroupBox("Crop")
@@ -313,15 +325,20 @@ class Window(QWidget):
             seen_missions = set()
             i = 0
             for mission in missions:
-                if mission not in skip_missions and mission not in seen_missions:
-                    mission_name = missions[mission]['value']
+                mission_name = missions[mission]['value']
+                if mission_name == "Extermination":
+                    mission_name = "Exterminate"
+                if mission not in skip_missions and mission_name not in seen_missions:
                     self.hide_missions[mission_name] = QCheckBox(mission_name)
                     self.hide_missions[mission_name].setChecked(False)
                     self.hide_missions[mission_name].stateChanged.connect(partial(self.set_hidden_mission, mission_name))
-                    hide_missions_layout.addWidget(self.hide_missions[mission_name], int(i/2),i % 2)
+                    hide_missions_layout.addWidget(self.hide_missions[mission_name], int(i/2), i % 2)
                     i += 1
                     seen_missions.add(mission_name)
             self.hide_missions_box.setLayout(hide_missions_layout)
+            self.mission_names = list(seen_missions)
+
+            self.load_settings()
         return self.hide_missions_box
 
     def set_hidden_mission(self, mission):
@@ -674,6 +691,8 @@ class Window(QWidget):
 
             self.mission_table.setItem(i, 3, QTableWidgetItem(self.get_duration_str(self.missions[i][3]-cur_time)))
             if self.missions[i][0] in self.hidden_relics:
+                self.mission_table.setRowHidden(i, True)
+            if self.missions[i][2] in self.hidden_missions:
                 self.mission_table.setRowHidden(i, True)
             else:
                 self.mission_table.setRowHidden(i, False)
