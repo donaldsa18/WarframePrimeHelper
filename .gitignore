@@ -1,0 +1,15 @@
+*.txt
+*.csv
+*.log
+*.log_old
+*.txt_old
+screenshots/
+temp/
+.idea
+__pycache__
+target
+src/main/python/__pycache__
+src/main/python/*.pyo
+src/main/resources
+env/
+env36/
