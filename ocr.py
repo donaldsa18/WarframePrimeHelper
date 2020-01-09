@@ -126,7 +126,7 @@ class OCR:
         self.primes = [key for key, value in self.prices.items() if "Prime" in key and "Set" not in key]
         self.primes.append("Forma Blueprint")
 
-        self.log = open('logs\\log.txt', 'a+')
+        self.log = open(os.path.relpath('logs\\log.txt'), 'a+')
 
         self.tesseract_log = open(os.path.relpath('logs\\tesseract.log'), 'a+')
         if self.gui is None:
@@ -139,7 +139,7 @@ class OCR:
                               help="uses the current screenshot for debug purposes")
             (options, args) = parser.parse_args()
             self.skip_screenshot = options.debug
-        #for i in range(len(self.crop_list)):
+
         self.api.put(PyTessBaseAPI())
         self.ex = ThreadPoolExecutor(max_workers=(len(self.crop_list)+3))
 
