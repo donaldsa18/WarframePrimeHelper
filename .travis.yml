@@ -50,11 +50,11 @@ jobs:
         language: shell
         before_install:
           - choco install miniconda3 -y
-          - "C:\tools\miniconda3\Scripts\activate.bat"
+          - /c/tools/miniconda3/Scripts/activate.bat
           - conda install -c conda-forge tesserocr -y
         env: PATH=/c/tools/miniconda3:/c/tools/miniconda3/Scripts:$PATH TESSDATA_PREFIX=$TRAVIS_BUILD_DIR/tesseract4win64-4.0-beta/
-variables:
-    QT_QPA_PLATFORM: "offscreen"
+env:
+  - QT_QPA_PLATFORM="offscreen"
 install:
   - pip3 install -r requirements.txt
 script:
