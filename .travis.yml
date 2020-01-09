@@ -45,13 +45,12 @@ jobs:
           - brew install leptonica
           - brew install tesseract
         env: PYTHON=3.7.4
-      - name: "Python 3.7.0 on Windows"
+      - name: "Python 3.6.8 on Windows"
         os: windows
         language: shell
         before_install:
           - choco install python3 --version 3.6.8
-          - refreshenv
-        env: TESSDATA_PREFIX=$TRAVIS_BUILD_DIR/tesseract4win64-4.0-beta/
+        env: PATH=/c/Python36:/c/Python36/Scripts:$PATH TESSDATA_PREFIX=$TRAVIS_BUILD_DIR/tesseract4win64-4.0-beta/
 variables:
     QT_QPA_PLATFORM: "offscreen"
 install:
