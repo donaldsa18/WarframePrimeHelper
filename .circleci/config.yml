@@ -5,7 +5,7 @@ orbs:
 
 jobs:
   build:
-    executor: win/gpu-nvidia
+    executor: win/default
     environment:
       TESSDATA_PREFIX: $CIRCLE_WORKING_DIRECTORY/tesseract4win64-4.0-beta/
     steps:
