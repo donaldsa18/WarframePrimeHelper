@@ -1,0 +1,17 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.3.0
+
+jobs:
+  build:
+    executor: win/gpu-nvidia
+    environment:
+      TESSDATA_PREFIX: $CIRCLE_WORKING_DIRECTORY/tesseract4win64-4.0-beta/
+    steps:
+      - checkout
+      - run: choco install miniconda3 -y
+      - run: pip install -r requirements.txt
+      - run: conda install -c conda-forge tesserocr opencv -y
+      - run: pytest -s
+
