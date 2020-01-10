@@ -15,8 +15,8 @@ import re
 import difflib
 import sys
 
-if os.path.isdir('tesseract4win64-4.0-beta/tessdata'):
-    os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta/tessdata')
+if os.path.isdir('tessdata'):
+    os.environ['TESSDATA_PREFIX'] = os.path.abspath('tessdata')
 
 from tesserocr import PyTessBaseAPI
 
@@ -81,8 +81,6 @@ class OCR:
         self.regex_alphabet = re.compile(r'[^a-zA-Z\s]')
 
         self.datetime_format = "%Y-%m-%d %I.%M.%S%p"
-        if os.path.isdir('tesseract4win64-4.0-beta/tessdata'):
-            os.environ['TESSDATA_PREFIX'] = os.path.abspath('tesseract4win64-4.0-beta/tessdata')
 
         self.gui = gui
         self.exit_now = False
