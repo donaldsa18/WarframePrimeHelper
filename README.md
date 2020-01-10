@@ -1,8 +1,11 @@
 # Warframe Prime Helper
 
+[![Build Status](https://travis-ci.com/donaldsa18/WarframePrimeHelper.svg?branch=master)](https://travis-ci.com/donaldsa18/WarframePrimeHelper)
+[![CircleCI](https://circleci.com/gh/donaldsa18/WarframePrimeHelper.svg?style=svg)](https://circleci.com/gh/donaldsa18/WarframePrimeHelper)
+
 Warframe Prime Helper is a tool that scans your screen for the prime parts selection screen and checks their prices.
 
-![A screenshot of Warframe Prime Helper](https://i.imgur.com/8YHsmS8.png)
+![A screenshot of Warframe Prime Helper](https://imgur.com/YKv9sKl.png)
 
 ## Where can I get it?
 
@@ -16,7 +19,7 @@ Warframe Prime Helper is a tool that scans your screen for the prime parts selec
 
 ### Filter Parameters
 - The filter parameters v1 and v2 describe the thresholds for a color to be considered part of text based on its value in HSV representation. You should only need to edit this if you have a screen saturation overlay or if Warframe changes their UI.
-- The filter paramater delta describes how different the screen has to be from the last frame to be processed by the OCR engine. Reduce it if the program doesn't detect any primes.
+- The filter parameter delta describes how different the screen has to be from the last frame to be processed by the OCR engine. Reduce it if the program doesn't detect any primes.
 
 ### Updates
 - The updates box manages price data from Warframe Market. Run Update Prices maybe once a week and run Update Ducats when new Primes are added to Warframe Market
@@ -36,17 +39,29 @@ Warframe Prime Helper is a tool that scans your screen for the prime parts selec
 - Hide mission types you don't like, like Mobile Defense for example.
 
 
-## Building Guide
-1. Download Python 3.6
+## Building Guide for Windows
+1. [Download and install Miniconda](https://docs.conda.io/en/latest/miniconda.html)
 2. Setup a virtual environment
-`python -m venv env`
+    ```
+    conda create --name env python=3.7
+    ```
 3. Activate the environment
-`env\Scripts\activate.bat`
-4. Install the dependencies
-`pip install -r requirements.txt`
-5. Run make.bat
-`make.bat`
-6. Now you should have an executable in target\Warframe Prime Helper\
-
-Alternatively, you can run it in dev mode
-`python main.py`
+    ```
+    conda activate env
+    ```
+4. Install tesseract with conda
+    ```
+    conda install -c conda-forge tesserocr
+    ```
+5. Install the other dependencies with pip
+    ```
+    pip install -r requirements.txt
+    ```
+6. Run make.bat
+    ```
+    make.bat
+    ```
+7. Now you should have an executable in target\Warframe Prime Helper\. Alternatively, you can run it in dev mode
+    ```
+    python main.py
+    ```

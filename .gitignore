@@ -12,6 +12,7 @@ __pycache__
 target
 src/main/python/__pycache__
 src/main/python/*.pyo
+src/main/python/test_*
 src/main/resources
 env/
 env36/
