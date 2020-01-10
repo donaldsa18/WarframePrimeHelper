@@ -162,7 +162,10 @@ class OCR:
         # running on windows console mode
         if win32gui is not None and self.gui is None:
             top_windows = []
-            win32gui.EnumWindows(self.window_enumeration_handler, top_windows)
+            try:
+                win32gui.EnumWindows(self.window_enumeration_handler, top_windows)
+            except:
+                return
             for i in top_windows:
                 if self.title in i[1]:
                     win32gui.ShowWindow(i[0], 5)

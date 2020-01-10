@@ -56,7 +56,7 @@ jobs:
           - brew install tesseract
         env:
           - PYTHON=3.7.6
-      - name: "Python 3.6.10on macOS"
+      - name: "Python 3.6.10 on macOS"
         os: osx
         osx_image: xcode11.3
         language: shell
