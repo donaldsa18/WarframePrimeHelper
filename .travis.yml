@@ -7,7 +7,7 @@ jobs:
         os: windows
         language: shell
         install:
-          - echo %PATH%
+          - echo $PATH
           - choco install miniconda3 curl 7zip.portable -y
           - conda install -c conda-forge tesserocr -y
           - pip install -r requirements.txt
