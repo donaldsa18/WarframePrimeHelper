@@ -38,7 +38,8 @@ jobs:
           - sudo apt-get install tesseract-ocr libtesseract-dev libleptonica-dev pkg-config libdbus-1-3 libxkbcommon-x11-0
         services:
           - xvfb
-      - os: osx
+      - name: "Python 3.8.1 on macOS"
+        os: osx
         osx_image: xcode11.3
         language: shell
         install:
@@ -46,8 +47,32 @@ jobs:
           - brew install tesseract
         env:
           - PYTHON=3.8.1
+      - name: "Python 3.7.6 on macOS"
+        os: osx
+        osx_image: xcode11.3
+        language: shell
+        install:
+          - brew install leptonica
+          - brew install tesseract
+        env:
           - PYTHON=3.7.6
+      - name: "Python 3.6.10on macOS"
+        os: osx
+        osx_image: xcode11.3
+        language: shell
+        install:
+          - brew install leptonica
+          - brew install tesseract
+        env:
           - PYTHON=3.6.10
+      - name: "Python 3.5.9 on macOS"
+        os: osx
+        osx_image: xcode11.3
+        language: shell
+        install:
+          - brew install leptonica
+          - brew install tesseract
+        env:
           - PYTHON=3.5.9
 before_install:
   - pip3 install -r requirements.txt
