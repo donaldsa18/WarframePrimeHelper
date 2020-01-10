@@ -11,7 +11,7 @@ jobs:
           - choco install miniconda3 curl 7zip.portable -y
           - conda install -c conda-forge tesserocr -y
           - pip install -r requirements.txt
-          - xcopy deps "C:\tools\miniconda3"
+          - xcopy deps "C:\Windows\System32" /y
           - curl -LJO https://github.com/lucasg/Dependencies/releases/download/v1.10/Dependencies_x64_Release.zip
           - 7za e Dependencies_x64_Release.zip
           - ./Dependencies.exe -modules /c/tools/miniconda3/Lib/site-packages/cv2/cv2.cp37-win_amd64.pyd
