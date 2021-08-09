@@ -34,5 +34,5 @@ urllib3==1.25.7
 wcwidth==0.1.8
 zipp==0.6.0
 tesserocr==2.4.0 ; sys_platform != 'win32'
-pywin32==227 ; sys_platform == 'win32'
+pywin32==301 ; sys_platform == 'win32'
 pywin32-ctypes==0.2.0 ; sys_platform == 'win32'
